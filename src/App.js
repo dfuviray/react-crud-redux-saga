@@ -6,6 +6,7 @@ import "font-awesome/css/font-awesome.min.css";
 import Header from "./components/header/Header";
 import { Table, TableHeader, TableItem } from "./components/table/Table";
 import Modal from "./components/modal/Modal";
+import Loading from "./components/loading/Loading";
 
 function App({ getLocationsRequested, data }) {
   const { locations, loading } = data;
@@ -48,7 +49,11 @@ function App({ getLocationsRequested, data }) {
       <Header onOpen={() => setOpen(true)} />
       <Table>
         <TableHeader data={headerItems} />
-        {loading && <div className="Loading">loading</div>}
+        {loading && (
+          <div className="Loading">
+            <Loading />
+          </div>
+        )}
         {!loading && <TableItem data={locations} />}
       </Table>
     </div>
