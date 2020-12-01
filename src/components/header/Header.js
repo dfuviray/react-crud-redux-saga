@@ -1,10 +1,10 @@
 import "./header.css";
 
-const Header = () => {
+const Header = ({ onOpen }) => {
   return (
     <div className="Header">
       <p>Locations</p>
-      <button>
+      <button onClick={onOpen}>
         <i className="fa fa-plus" />
       </button>
     </div>

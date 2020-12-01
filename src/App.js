@@ -1,9 +1,13 @@
+import { useState } from "react";
 import "./App.css";
 import "font-awesome/css/font-awesome.min.css";
+
 import Header from "./components/header/Header";
 import { Table, TableHeader, TableItem } from "./components/table/Table";
+import Modal from "./components/modal/Modal";
 
 function App() {
+  const [open, setOpen] = useState(false);
   const headerItems = ["id", "location", "description", ""];
   const items = [
     {
@@ -27,9 +31,15 @@ function App() {
       description: "invoice New Taiwan Dollar",
     },
   ];
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="App">
-      <Header />
+      <Modal onClose={handleClose} open={open} />
+      <Header onOpen={() => setOpen(true)} />
       <Table>
         <TableHeader data={headerItems} />
         <TableItem data={items} />
