@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import "./App.css";
 import "font-awesome/css/font-awesome.min.css";
 
@@ -6,8 +7,13 @@ import Header from "./components/header/Header";
 import { Table, TableHeader, TableItem } from "./components/table/Table";
 import Modal from "./components/modal/Modal";
 
-function App() {
+function App({ getLocationsRequested, data }) {
+  const { locations, loading } = data;
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    getLocationsRequested();
+  }, []);
+
   const headerItems = ["id", "location", "description", ""];
   const items = [
     {
@@ -42,10 +48,21 @@ function App() {
       <Header onOpen={() => setOpen(true)} />
       <Table>
         <TableHeader data={headerItems} />
-        <TableItem data={items} />
+        {loading && <div className="Loading">loading</div>}
+        {!loading && <TableItem data={locations} />}
       </Table>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return { data: state.data };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getLocationsRequested: () => dispatch({ type: "GET_LOCATIONS_REQUESTED" }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

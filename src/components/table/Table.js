@@ -9,16 +9,20 @@ export const TableHeader = ({ data }) => {
 };
 
 export const TableItem = ({ data }) => {
-  return renderItems(data);
+  return <div className="TableBody">{renderItems(data)}</div>;
 };
 
 const renderHeader = (data) => {
-  return data.map((d) => <div className="TableCol">{d}</div>);
+  return data.map((d) => (
+    <div className="TableCol" key={d}>
+      {d}
+    </div>
+  ));
 };
 
 const renderItems = (data) => {
   return data.map((d) => (
-    <div className="TableRow Item">
+    <div className="TableRow Item" key={d.id}>
       <div className="TableCol">{d.id}</div>
       <div className="TableCol">{d.location}</div>
       <div className="TableCol">{d.description}</div>
