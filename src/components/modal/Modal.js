@@ -10,6 +10,16 @@ const Modal = ({ onClose, open }) => {
           <i className="fa fa-close" aria-hidden="true"></i>
         </button>
       </div>
+      <div className="ModalBody">
+        <h2 className="ModalTitle">Add Form</h2>
+        <form>
+          <label for="location">Location</label>
+          <input id="location" placeholder="Location" />
+          <label for="description">Description</label>
+          <input id="description" placeholder="Description" />
+          <button className="Add">Add</button>
+        </form>
+      </div>
     </div>
   );
 };
