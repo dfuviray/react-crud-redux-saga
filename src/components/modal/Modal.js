@@ -7,6 +7,7 @@ const Modal = ({ onClose, open, postLocationRequested, addData }) => {
 
   function onSubmit(data) {
     postLocationRequested(data);
+    onClose();
   }
 
   if (!open) return null;
