@@ -6,46 +6,41 @@ import "font-awesome/css/font-awesome.min.css";
 import Header from "./components/header/Header";
 import { Table, TableHeader, TableItem } from "./components/table/Table";
 import Modal from "./components/modal/Modal";
+import ModalDelete from "./components/modal/ModalDelete";
 import Loading from "./components/loading/Loading";
 
 function App({ getLocationsRequested, data }) {
   const { locations, loading } = data;
   const [open, setOpen] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [deleteSelected, setDeleteSelected] = useState(null);
   useEffect(() => {
     getLocationsRequested();
   }, []);
 
   const headerItems = ["id", "location", "description", ""];
-  const items = [
-    {
-      id: "11",
-      location: "281 Konopelski Club2",
-      description: "solid state sexy2",
-    },
-    {
-      id: "12",
-      location: "100 Enos Street",
-      description: "payment",
-    },
-    {
-      id: "13",
-      location: "6852 Keebler Loaf",
-      description: "generate monitoring",
-    },
-    {
-      id: "14",
-      location: "7068 Kulas Lights",
-      description: "invoice New Taiwan Dollar",
-    },
-  ];
 
   const handleClose = () => {
     setOpen(false);
   };
 
+  const handleCloseDeleteModal = () => {
+    setOpenDeleteModal(false);
+  };
+
+  const handleSetDeleteSelected = (data) => {
+    setOpenDeleteModal(true);
+    setDeleteSelected(data);
+  };
+
   return (
     <div className="App">
       <Modal onClose={handleClose} open={open} />
+      <ModalDelete
+        data={deleteSelected}
+        onClose={handleCloseDeleteModal}
+        open={openDeleteModal}
+      />
       <Header onOpen={() => setOpen(true)} />
       <Table>
         <TableHeader data={headerItems} />
@@ -54,7 +49,12 @@ function App({ getLocationsRequested, data }) {
             <Loading />
           </div>
         )}
-        {!loading && <TableItem data={locations} />}
+        {!loading && (
+          <TableItem
+            data={locations}
+            onDeleteSelected={handleSetDeleteSelected}
+          />
+        )}
       </Table>
     </div>
   );

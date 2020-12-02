@@ -63,3 +63,21 @@ button.Add {
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }
+
+.ModalBody.Delete {
+  text-align: center;
+}
+
+.ModalBody.Delete button {
+  width: 5rem;
+  margin-left: 1rem;
+}
+
+.ModalDeleteMessage {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.ModalDeleteMessage span {
+  font-weight: bold;
+}

@@ -1,6 +1,10 @@
 import { all } from "redux-saga/effects";
-import { locationSaga, addLocationSaga } from "./locationsSaga";
+import {
+  locationSaga,
+  addLocationSaga,
+  deleteLocationSaga,
+} from "./locationsSaga";
 
 export default function* rootSaga() {
-  yield all([locationSaga(), addLocationSaga()]);
+  yield all([locationSaga(), addLocationSaga(), deleteLocationSaga()]);
 }

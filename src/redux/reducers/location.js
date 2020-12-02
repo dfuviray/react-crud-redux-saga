@@ -10,6 +10,10 @@ const sort = (data) => {
   return data.sort((a, b) => (a.title < b.title ? 1 : -1));
 };
 
+const removeItem = (data, item) => {
+  return data.filter((d) => d.id !== item.id);
+};
+
 export default function locations(state = initialState, action) {
   switch (action.type) {
     case type.GET_LOCATIONS_REQUESTED:
@@ -38,6 +42,18 @@ export default function locations(state = initialState, action) {
       };
 
     case type.POST_LOCATIONS_FAILED:
+      return {
+        ...state,
+        message: action.message,
+      };
+
+    case type.DELETE_LOCATIONS_SUCCESS:
+      return {
+        ...state,
+        locations: removeItem(state.locations, action.payload),
+      };
+
+    case type.DELETE_LOCATIONS_FAILED:
       return {
         ...state,
         message: action.message,

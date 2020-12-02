@@ -39,7 +39,6 @@ async function postApi(locations) {
 function* addLocation(action) {
   try {
     const locations = yield call(postApi, action.data);
-    console.log("a");
     yield put({ type: "POST_LOCATIONS_SUCCESS", payload: locations });
   } catch (e) {
     console.log(e);
@@ -51,4 +50,28 @@ function* addLocationSaga() {
   yield takeEvery("POST_LOCATIONS_REQUEST", addLocation);
 }
 
-export { locationSaga, addLocationSaga };
+// DELETE
+
+async function deleteApi(id) {
+  try {
+    const result = await axios.delete(`${endpoint}/${id}`);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+function* deleteLocation(action) {
+  try {
+    const deletedData = yield call(deleteApi, action.id);
+    yield put({ type: "DELETE_LOCATIONS_SUCCESS", payload: deletedData });
+  } catch (e) {
+    yield put({ type: "DELETE_LOCATIONS_FAILED", message: e.message });
+  }
+}
+
+function* deleteLocationSaga() {
+  yield takeEvery("DELETE_LOCATIONS_REQUEST", deleteLocation);
+}
+
+export { locationSaga, addLocationSaga, deleteLocationSaga };

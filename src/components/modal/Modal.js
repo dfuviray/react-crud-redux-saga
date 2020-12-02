@@ -19,9 +19,9 @@ const Modal = ({ onClose, open, postLocationRequested, addData }) => {
           <i className="fa fa-close" aria-hidden="true"></i>
         </button>
       </div>
-      <div className="ModalBody" onSubmit={handleSubmit(onSubmit)}>
+      <div className="ModalBody">
         <h2 className="ModalTitle">Add Form</h2>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="location">Location</label>
           <input
             ref={register({
