@@ -25,4 +25,30 @@ function* locationSaga() {
   yield takeEvery("GET_LOCATIONS_REQUESTED", fetchLocations);
 }
 
-export default locationSaga;
+// POST
+
+async function postApi(locations) {
+  try {
+    const result = await axios.post(endpoint, locations);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+function* addLocation(action) {
+  try {
+    const locations = yield call(postApi, action.data);
+    console.log("a");
+    yield put({ type: "POST_LOCATIONS_SUCCESS", payload: locations });
+  } catch (e) {
+    console.log(e);
+    yield put({ type: "POST_LOCATIONS_FAILED", message: e.message });
+  }
+}
+
+function* addLocationSaga() {
+  yield takeEvery("POST_LOCATIONS_REQUEST", addLocation);
+}
+
+export { locationSaga, addLocationSaga };

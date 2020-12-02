@@ -6,6 +6,10 @@ const initialState = {
   error: null,
 };
 
+const sort = (data) => {
+  return data.sort((a, b) => (a.title < b.title ? 1 : -1));
+};
+
 export default function locations(state = initialState, action) {
   switch (action.type) {
     case type.GET_LOCATIONS_REQUESTED:
@@ -17,7 +21,7 @@ export default function locations(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        locations: action.locations,
+        locations: sort(action.locations),
       };
 
     case type.GET_LOCATIONS_FAILED:
@@ -25,6 +29,18 @@ export default function locations(state = initialState, action) {
         ...state,
         loading: false,
         error: action.message,
+      };
+
+    case type.POST_LOCATIONS_SUCCESS:
+      return {
+        ...state,
+        locations: [action.payload, ...state.locations],
+      };
+
+    case type.POST_LOCATIONS_FAILED:
+      return {
+        ...state,
+        message: action.message,
       };
 
     default:
