@@ -3,8 +3,14 @@ import {
   locationSaga,
   addLocationSaga,
   deleteLocationSaga,
+  updateLocationSaga,
 } from "./locationsSaga";
 
 export default function* rootSaga() {
-  yield all([locationSaga(), addLocationSaga(), deleteLocationSaga()]);
+  yield all([
+    locationSaga(),
+    addLocationSaga(),
+    deleteLocationSaga(),
+    updateLocationSaga(),
+  ]);
 }

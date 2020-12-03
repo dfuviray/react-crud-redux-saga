@@ -14,6 +14,8 @@ function App({ getLocationsRequested, data }) {
   const [open, setOpen] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [deleteSelected, setDeleteSelected] = useState(null);
+  const [editSelected, setEditSelected] = useState(null);
+
   useEffect(() => {
     getLocationsRequested();
   }, []);
@@ -22,6 +24,7 @@ function App({ getLocationsRequested, data }) {
 
   const handleClose = () => {
     setOpen(false);
+    setEditSelected(null);
   };
 
   const handleCloseDeleteModal = () => {
@@ -33,9 +36,20 @@ function App({ getLocationsRequested, data }) {
     setDeleteSelected(data);
   };
 
+  const handleSetEditSelected = (data) => {
+    setEditSelected(data);
+    setOpen(true);
+  };
+
   return (
     <div className="App">
-      <Modal onClose={handleClose} open={open} />
+      <Modal
+        onClose={handleClose}
+        open={open}
+        type={editSelected ? "edit" : "add"}
+        editData={editSelected ? editSelected : null}
+      />
+
       <ModalDelete
         data={deleteSelected}
         onClose={handleCloseDeleteModal}
@@ -53,6 +67,7 @@ function App({ getLocationsRequested, data }) {
           <TableItem
             data={locations}
             onDeleteSelected={handleSetDeleteSelected}
+            onEditSelected={handleSetEditSelected}
           />
         )}
       </Table>

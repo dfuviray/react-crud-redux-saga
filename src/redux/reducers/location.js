@@ -14,6 +14,13 @@ const removeItem = (data, item) => {
   return data.filter((d) => d.id !== item.id);
 };
 
+const editItem = (data, item) => {
+  const locations = [...data];
+  let index = locations.findIndex((d) => d.id === item.id);
+  locations[index] = { ...item };
+  return locations;
+};
+
 export default function locations(state = initialState, action) {
   switch (action.type) {
     case type.GET_LOCATIONS_REQUESTED:
@@ -54,6 +61,18 @@ export default function locations(state = initialState, action) {
       };
 
     case type.DELETE_LOCATIONS_FAILED:
+      return {
+        ...state,
+        message: action.message,
+      };
+
+    case type.UPDATE_LOCATIONS_SUCCESS:
+      return {
+        ...state,
+        locations: editItem(state.locations, action.payload),
+      };
+
+    case type.UPDATE_LOCATIONS_FAILED:
       return {
         ...state,
         message: action.message,

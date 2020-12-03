@@ -8,7 +8,7 @@ export const TableHeader = ({ data }) => {
   return <div className="TableRow">{renderHeader(data)} </div>;
 };
 
-export const TableItem = ({ data, onDeleteSelected }) => {
+export const TableItem = ({ data, onDeleteSelected, onEditSelected }) => {
   const renderItems = (data) => {
     return data.map((d) => (
       <div className="TableRow Item" key={d.id}>
@@ -16,7 +16,7 @@ export const TableItem = ({ data, onDeleteSelected }) => {
         <div className="TableCol">{d.location}</div>
         <div className="TableCol">{d.description}</div>
         <div className="TableCol">
-          <button>
+          <button onClick={() => onEditSelected(d)}>
             <i className="fa fa-pencil" aria-hidden="true"></i>
           </button>
           <button onClick={() => onDeleteSelected(d)}>

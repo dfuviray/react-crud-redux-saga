@@ -74,4 +74,33 @@ function* deleteLocationSaga() {
   yield takeEvery("DELETE_LOCATIONS_REQUEST", deleteLocation);
 }
 
-export { locationSaga, addLocationSaga, deleteLocationSaga };
+// UPDATE
+
+async function updateApi(data) {
+  try {
+    const result = await axios.put(`${endpoint}/${data.id}`, data);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+function* updateLocation(action) {
+  try {
+    const updatedData = yield call(updateApi, action.data);
+    yield put({ type: "UPDATE_LOCATIONS_SUCCESS", payload: updatedData });
+  } catch (e) {
+    yield put({ type: "UPDATE_LOCATIONS_FAILED", message: e.message });
+  }
+}
+
+function* updateLocationSaga() {
+  yield takeEvery("UPDATE_LOCATIONS_REQUEST", updateLocation);
+}
+
+export {
+  locationSaga,
+  addLocationSaga,
+  deleteLocationSaga,
+  updateLocationSaga,
+};
